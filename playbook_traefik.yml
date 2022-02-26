@@ -1,0 +1,12 @@
+---
+- name: Install traefik
+  hosts: localhost
+  become: yes
+  vars:
+    user: root
+    group: docker
+    traefik_dir: /var/www/traefik
+  roles:
+    - { role: docker, tags: docker }
+    - { role: traefik, tags: traefik }
+    - { role: wordpress, tags: wordpress}

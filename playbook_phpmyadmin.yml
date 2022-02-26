@@ -1,0 +1,8 @@
+- hosts: localhost
+  roles:
+    - name: Deploy phpmyadmin
+      role: ansible-docker-phpmyadmin
+      phpmyadmin_absolute_uri: https://phpmyadmin.dev.vayetek.com
+      phpmyadmin_network: default
+      phpmyadmin_mysqlhosts: [mysql55, mysql56, mysql57]
+      phpmyadmin_traefik_frontend_rule: "Host:phpmyadmin.dev.vayetek.com"

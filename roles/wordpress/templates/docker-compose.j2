@@ -1,0 +1,33 @@
+
+mysql:
+    image: mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./wp-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ wp_db_psw }}
+    restart: always
+    labels:
+      - traefik.frontend.rule=Host:mysql.dev.vayetek.com
+      - traefik.port=80
+      - traefik.enable=true
+
+wordpress:
+    image: wordpress:{{ wp_version }}-php7.0-fpm
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./wordpress:/var/www/html
+    environment:
+      - WORDPRESS_DB_NAME={{ wp_db_name }}
+      - WORDPRESS_TABLE_PREFIX={{ wp_db_tb_pre }}
+      - WORDPRESS_DB_HOST={{ wp_db_host }}
+      - WORDPRESS_DB_PASSWORD={{ wp_db_psw }}
+    labels:
+      - traefik.frontend.rule=Host:wordpress.dev.vayetek.com
+      - traefik.port=80
+      - traefik.enable=true
+    links:
+      - mysql
+    restart: always

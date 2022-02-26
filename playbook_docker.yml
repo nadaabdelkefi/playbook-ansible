@@ -1,0 +1,10 @@
+---
+- name: Install docker
+  hosts: localhost
+  become: yes
+  vars:
+    user: root
+    group: docker
+    traefik_dir: /var/www/traefik
+  roles:
+    - { role: docker, tags: docker }
